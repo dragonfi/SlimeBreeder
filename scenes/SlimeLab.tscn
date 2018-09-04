@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/SlimeLab.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Slime.tscn" type="PackedScene" id=2]
+
+[node name="SlimeLab" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [ -154.4 ]
+}
+
+[node name="Slime" parent="." index="0" instance=ExtResource( 2 )]
+
+position = Vector2( 230, 60 )
+
+[node name="Slime2" parent="." index="1" instance=ExtResource( 2 )]
+
+position = Vector2( 750, 70 )
+
+[node name="Slime3" parent="." index="2" instance=ExtResource( 2 )]
+
+position = Vector2( 230, 350 )
+
+[node name="Slime4" parent="." index="3" instance=ExtResource( 2 )]
+
+position = Vector2( 750, 350 )
+
+[connection signal="pressed" from="Slime" to="." method="_on_Slime_pressed"]
+
+[connection signal="pressed" from="Slime2" to="." method="_on_Slime_pressed"]
+
+[connection signal="pressed" from="Slime3" to="." method="_on_Slime_pressed"]
+
+[connection signal="pressed" from="Slime4" to="." method="_on_Slime_pressed"]
+
+

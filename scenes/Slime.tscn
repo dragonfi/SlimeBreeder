@@ -1,0 +1,110 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/Slime.gd" type="Script" id=1]
+[ext_resource path="res://images/slime_shadow.png" type="Texture" id=2]
+[ext_resource path="res://images/slime.png" type="Texture" id=3]
+[ext_resource path="res://images/slime_shine.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "Idle"
+length = 2.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.8, 1.2 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shadow:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.2, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.8, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.2, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -50 ), Vector2( 0, 0 ) ]
+}
+
+[node name="Slime" type="Node2D"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+idle_speed = 1.0
+color = Color( 0, 0.132812, 1, 0.392274 )
+size = 0.5
+
+[node name="Shadow" type="Sprite" parent="." index="0"]
+
+show_behind_parent = true
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
+
+modulate = Color( 1, 1, 1, 0.88949 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Offset", "Transform", "Visibility" ]
+
+[node name="Shine" type="Sprite" parent="Sprite" index="0"]
+
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Offset", "Transform", "Visibility" ]
+
+[node name="Area2D" type="Area2D" parent="Sprite" index="1"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite/Area2D" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 13.2415, -52.5995, 91.1173, -35.6269, 162.318, 4.36243, 213.524, 74.1, 215.859, 135.154, 184.678, 171.642, 120.326, 186.237, -109.881, 185.574, -192.808, 168.325, -219.345, 116.578, -199.443, 47.5824, -125.413, -20.0919, -63.7152, -44.6385 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Idle = SubResource( 1 )
+blend_times = [  ]
+_sections_unfolded = [ "Playback Options" ]
+
+[connection signal="input_event" from="Sprite/Area2D" to="." method="_on_Area2D_input_event"]
+
+[connection signal="mouse_entered" from="Sprite/Area2D" to="." method="_on_Area2D_mouse_entered"]
+
+[connection signal="mouse_exited" from="Sprite/Area2D" to="." method="_on_Area2D_mouse_exited"]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+
+
