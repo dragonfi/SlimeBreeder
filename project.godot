@@ -10,7 +10,7 @@ config_version=3
 
 [application]
 
-config/name="Slime Husbandry"
+config/name="Slime Breeder"
 run/main_scene="res://scenes/SlimeLab.tscn"
 config/icon="res://icon.png"
 
