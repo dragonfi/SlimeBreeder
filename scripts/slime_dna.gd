@@ -45,10 +45,13 @@ class Gene:
 	func as_dominant(allele = null):
 		return 1.0 if as_bool(allele) else 0.0
 	
+	func _str():
+		return "[%s,%s]" % [a1, a2]
+
 	func combine(other):
 		var new_gene = get_script().new()
-		new_gene.a1 = a1 if randi() % 2 == 0 else other.a1
-		new_gene.a2 = a2 if randi() % 2 == 0 else other.a2
+		new_gene.a1 = a1 if randi() % 2 == 0 else a2
+		new_gene.a2 = other.a1 if randi() % 2 == 0 else other.a2
 		return new_gene
 
 static func g(a1, a2):
@@ -85,10 +88,7 @@ static func get_color(dna):
 	var magenta = 0.5 * dna.magenta1.as_dominant() + 0.5 * dna.magenta2.as_dominant()
 	var opaqueness = 0.5 * dna.opaque1.as_dominant() + 0.5 * dna.opaque2.as_dominant()
 
-	cyan = dna.cyan1.as_dominant()
-	yellow = dna.yellow1.as_dominant()
-	magenta = dna.magenta1.as_dominant()
-	opaqueness = dna.opaque1.as_dominant()
+	print(dna_to_str(dna))
 
 	var red = 1 - cyan
 	var green = 1 - magenta
@@ -113,6 +113,12 @@ static func combine_dna(dna1, dna2):
 	for key in dna1.keys():
 		new_dna[key] = dna1[key].combine(dna2[key])
 	return new_dna
+
+static func dna_to_str(dna):
+	var string = ""
+	for key in dna:
+		string += "%s:%s" % [key, dna[key]._str()]
+	return string
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
