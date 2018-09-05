@@ -42,6 +42,9 @@ class Gene:
 			return a1 != NONE or a2 != NONE
 		return a1 == allele or a2 == allele
 	
+	func as_dominant(allele = null):
+		return 1.0 if as_bool(allele) else 0.0
+	
 	func combine(other):
 		var new_gene = get_script().new()
 		new_gene.a1 = a1 if randi() % 2 == 0 else other.a1
@@ -62,12 +65,7 @@ static func g_random(alleles):
 
 var hex_dna = "v0:"
 var bool_dna = [true, false, false, true]
-var dna = {
-	cyan = g(CYAN, NONE),
-	magenta = g(NONE, NONE),
-	yellow = g(YELLOW, YELLOW),
-	opaque = g(OPAQUE, NONE)
-}
+var dna = {}
 
 export var color = Color(1, 1, 1, 1)
 var size = 1.0
@@ -82,10 +80,15 @@ func init(input_dna):
 	dna = dna
 
 static func get_color(dna):
-	var cyan = dna.cyan.as_float()
-	var yellow = dna.yellow.as_float()
-	var magenta = dna.magenta.as_float()
-	var opaqueness = dna.opaque.as_float()
+	var cyan = 0.5 * dna.cyan1.as_dominant() + 0.5 * dna.cyan2.as_dominant()
+	var yellow = 0.5 * dna.yellow1.as_dominant() + 0.5 * dna.yellow2.as_dominant()
+	var magenta = 0.5 * dna.magenta1.as_dominant() + 0.5 * dna.magenta2.as_dominant()
+	var opaqueness = 0.5 * dna.opaque1.as_dominant() + 0.5 * dna.opaque2.as_dominant()
+
+	cyan = dna.cyan1.as_dominant()
+	yellow = dna.yellow1.as_dominant()
+	magenta = dna.magenta1.as_dominant()
+	opaqueness = dna.opaque1.as_dominant()
 
 	var red = 1 - cyan
 	var green = 1 - magenta
@@ -95,10 +98,14 @@ static func get_color(dna):
 
 static func random_dna():
 	return {
-		cyan = g_random([CYAN, NONE]),
-		magenta = g_random([MAGENTA, NONE]),
-		yellow = g_random([YELLOW, NONE]),
-		opaque = g_random([OPAQUE, NONE])
+		cyan1 = g_random([CYAN, NONE]),
+		cyan2 = g_random([CYAN, NONE]),
+		magenta1 = g_random([MAGENTA, NONE]),
+		magenta2 = g_random([MAGENTA, NONE]),
+		yellow1 = g_random([YELLOW, NONE]),
+		yellow2 = g_random([YELLOW, NONE]),
+		opaque1 = g_random([OPAQUE, NONE]),
+		opaque2 = g_random([OPAQUE, NONE])
 	}
 
 static func combine_dna(dna1, dna2):
