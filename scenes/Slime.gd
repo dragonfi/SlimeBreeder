@@ -19,6 +19,7 @@ var dna
 export var idle_speed = 1.0
 export var color = Color(1, 1, 1, 1)
 export var size = 1.0
+var modulate_scale = 0.5
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -26,6 +27,8 @@ func _ready():
 	animation_player = get_node("AnimationPlayer")
 	sprite = get_node("Sprite")
 	shine = get_node("Sprite/Shine")
+
+	modulate_scale = scale
 
 	animation_player.playback_speed = idle_speed
 	animation_player.queue("Idle")
@@ -44,7 +47,7 @@ func set_dna(slime_dna):
 	shine.self_modulate = (color + Color(1, 1, 1, 1)) / 2
 	sprite.self_modulate = color
 	
-	scale = Vector2(size, size)
+	scale = Vector2(modulate_scale.x * size,  modulate_scale.y * size)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "Idle":
