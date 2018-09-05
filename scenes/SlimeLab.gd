@@ -5,12 +5,22 @@ extends Node2D
 # var b = "textvar"
 
 var SlimeDna = preload("res://scripts/slime_dna.gd")
+var Slime = preload("res://scenes/Slime.tscn")
 
 var selected_dna = []
-var slimes
+var slimes = []
 
 func _ready():
-	slimes = [get_node("Slime"), get_node("Slime2"), get_node("Slime3"), get_node("Slime4")]
+	var vp = get_viewport()
+	var spacing = vp.size / 4.0
+	var initial_offset = spacing / 2.0
+	for i in range(4):
+		for j in range(4):
+			var slime = Slime.instance()
+			add_child(slime)
+			slime.position = initial_offset + Vector2(spacing.x * i, spacing.y * j)
+			slime.connect("pressed", self, "_on_Slime_pressed")
+			slimes.append(slime)
 
 func breed():
 	print("breeding")
