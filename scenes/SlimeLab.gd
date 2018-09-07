@@ -7,7 +7,7 @@ extends Node2D
 var SlimeDna = preload("res://scripts/slime_dna.gd")
 var Slime = preload("res://scenes/Slime.tscn")
 
-var selected_dna = []
+var selected_slimes = []
 var slimes = []
 
 func _ready():
@@ -25,11 +25,12 @@ func _ready():
 func breed():
 	print("breeding")
 	for slime in slimes:
-		slime.set_dna(SlimeDna.combine_dna(selected_dna[0], selected_dna[1]))
+		slime.set_dna(SlimeDna.combine_dna(selected_slimes[0].dna, selected_slimes[1].dna))
 		slime.deselect()
-	selected_dna = []
+	selected_slimes = []
 
 func _on_Slime_pressed(slime):
-	selected_dna.append(slime.dna)
-	if len(selected_dna) >= 2:
+	if not slime in selected_slimes:
+		selected_slimes.append(slime)
+	if len(selected_slimes) >= 2:
 		breed()
