@@ -25,7 +25,7 @@ func _ready():
 func breed():
 	print("breeding")
 	for slime in slimes:
-		slime.set_dna(SlimeDna.combine_dna(selected_slimes[0].dna, selected_slimes[1].dna))
+		slime.set_dna(selected_slimes[0].dna.combine(selected_slimes[1].dna))
 		slime.deselect()
 	selected_slimes = []
 

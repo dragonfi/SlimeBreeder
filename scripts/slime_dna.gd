@@ -21,7 +21,8 @@ enum Alleles {
 	CYAN,
 	MAGENTA,
 	YELLOW,
-	OPAQUE
+	OPAQUE,
+	DOMINANT,
 }
 
 class Gene:
@@ -66,38 +67,48 @@ static func g_random(alleles):
 # EASY: mendelian inheritance, multiple genes
 # NORMAL: inhibitors, precursors, multiple alleles, etc.
 
-var hex_dna = "v0:"
-var bool_dna = [true, false, false, true]
-var dna = {}
+class Dna:
+	var dna = {}
+	
+	func init(new_dna):
+		dna = new_dna
+		return self
+	
+	func get_color():
+		var cyan = 0.0
+		var yellow = 0.0
+		var magenta = 0.0
+		var opaqueness = 0.0
+	
+		if dna.cyan_precursor.as_dominant():
+			cyan = 0.5 * dna.cyan1.as_dominant() + 0.5 * dna.cyan2.as_dominant()
+		if dna.yellow_precursor.as_dominant():
+			yellow = 0.5 * dna.yellow1.as_dominant() + 0.5 * dna.yellow2.as_dominant()
+		if dna.magenta_precursor.as_dominant():
+			magenta = 0.5 * dna.magenta1.as_dominant() + 0.5 * dna.magenta2.as_dominant()
 
-export var color = Color(1, 1, 1, 1)
-var size = 1.0
-var idle_speed = 1.0
+		opaqueness = 0.5 * dna.opaque1.as_dominant() + 0.5 * dna.opaque2.as_dominant()
 
-func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	color = _get_color_from_dna(dna)
+		var red = 1 - cyan
+		var green = 1 - magenta
+		var blue = 1 - yellow
+		var alpha = opaqueness
+		return Color(red, green, blue, alpha)
 
-func init(input_dna):
-	dna = dna
+	func combine(other):
+		var new_dna = {}
+		for key in dna.keys():
+			new_dna[key] = dna[key].combine(other.dna[key])
+		return get_script().new().init(new_dna)
 
-static func get_color(dna):
-	var cyan = 0.5 * dna.cyan1.as_dominant() + 0.5 * dna.cyan2.as_dominant()
-	var yellow = 0.5 * dna.yellow1.as_dominant() + 0.5 * dna.yellow2.as_dominant()
-	var magenta = 0.5 * dna.magenta1.as_dominant() + 0.5 * dna.magenta2.as_dominant()
-	var opaqueness = 0.5 * dna.opaque1.as_dominant() + 0.5 * dna.opaque2.as_dominant()
+	func _str():
+		var string = ""
+		for key in dna:
+			string += "%s:%s" % [key, dna[key]._str()]
+		return string
 
-	print(dna_to_str(dna))
-
-	var red = 1 - cyan
-	var green = 1 - magenta
-	var blue = 1 - yellow
-	var alpha = opaqueness
-	return Color(red, green, blue, alpha)
-
-static func random_dna():
-	return {
+static func new_random_dna():
+	return Dna.new().init({
 		cyan1 = g_random([CYAN, NONE]),
 		cyan2 = g_random([CYAN, NONE]),
 		magenta1 = g_random([MAGENTA, NONE]),
@@ -105,20 +116,11 @@ static func random_dna():
 		yellow1 = g_random([YELLOW, NONE]),
 		yellow2 = g_random([YELLOW, NONE]),
 		opaque1 = g_random([OPAQUE, NONE]),
-		opaque2 = g_random([OPAQUE, NONE])
-	}
-
-static func combine_dna(dna1, dna2):
-	var new_dna = {}
-	for key in dna1.keys():
-		new_dna[key] = dna1[key].combine(dna2[key])
-	return new_dna
-
-static func dna_to_str(dna):
-	var string = ""
-	for key in dna:
-		string += "%s:%s" % [key, dna[key]._str()]
-	return string
+		opaque2 = g_random([OPAQUE, NONE]),
+		cyan_precursor = g_random([DOMINANT, NONE]),
+		magenta_precursor = g_random([DOMINANT, NONE]),
+		yellow_precursor = g_random([DOMINANT, NONE]),
+	})
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

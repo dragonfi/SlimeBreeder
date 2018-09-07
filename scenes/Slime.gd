@@ -33,7 +33,7 @@ func _ready():
 	animation_player.playback_speed = idle_speed
 	animation_player.queue("Idle")
 
-	set_dna(SlimeDna.random_dna())
+	set_dna(SlimeDna.new_random_dna())
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
@@ -42,7 +42,7 @@ func _ready():
 
 func set_dna(slime_dna):
 	dna = slime_dna
-	color = SlimeDna.get_color(dna)
+	color = dna.get_color()
 
 	shine.self_modulate = (color + Color(1, 1, 1, 1)) / 2
 	sprite.self_modulate = color
