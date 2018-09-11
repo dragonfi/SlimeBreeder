@@ -12,7 +12,7 @@ use_filter = true
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="DebugSlime" index="0" instance=ExtResource( 1 )]
+[node name="DebugSlime" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
 color = Color( 1, 1, 1, 1 )

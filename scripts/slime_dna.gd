@@ -94,6 +94,12 @@ class Dna:
 		var blue = 1 - yellow
 		var alpha = opaqueness
 		return Color(red, green, blue, alpha)
+	
+	func get_size():
+		return 1.0
+
+	func get_idle_speed():
+		return 1.0
 
 	func combine(other):
 		var new_dna = {}
