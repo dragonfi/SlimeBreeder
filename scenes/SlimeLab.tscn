@@ -1,130 +1,46 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/SlimeLab.gd" type="Script" id=1]
-[ext_resource path="res://scenes/SlimeCage.tscn" type="PackedScene" id=2]
-[ext_resource path="res://fonts/SlimeLabFont.tres" type="DynamicFont" id=3]
-
+[ext_resource path="res://scenes/Opportunities.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/SlimeCage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://fonts/SlimeLabFont.tres" type="DynamicFont" id=4]
 
 [node name="SlimeLab" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="SlimeCage" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Opportunities" parent="." index="0" instance=ExtResource( 2 )]
 
-scale = Vector2( 0.75, 0.75 )
+position = Vector2( 1020, 0 )
+
+[node name="SlimeCage" parent="." index="1" instance=ExtResource( 3 )]
+
+scale = Vector2( 0.7, 0.7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="MainMenu" type="Node2D" parent="." index="1"]
+[node name="UI" type="Node2D" parent="." index="2"]
 
-[node name="SlimeCageButton" type="Button" parent="MainMenu" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 530.0
-margin_top = 500.0
-margin_right = 632.0
-margin_bottom = 596.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-custom_fonts/font = ExtResource( 3 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Cage"
-flat = false
-align = 1
-_sections_unfolded = [ "custom_colors", "custom_fonts" ]
-
-[node name="OpportunitiesButton" type="Button" parent="MainMenu" index="1"]
+[node name="Money" type="Label" parent="UI" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 750.0
-margin_top = 500.0
-margin_right = 1017.0
-margin_bottom = 596.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-custom_fonts/font = ExtResource( 3 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Opportunities"
-flat = false
-align = 1
-_sections_unfolded = [ "custom_fonts" ]
-
-[node name="Money" type="Label" parent="MainMenu" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 850.0
-margin_right = 1014.0
-margin_bottom = 90.0
+margin_top = 530.0
+margin_right = 164.0
+margin_bottom = 620.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "Money: 0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
-
-[node name="BackButton" type="Button" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 640.0
-margin_top = 500.0
-margin_right = 741.0
-margin_bottom = 596.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-custom_fonts/font = ExtResource( 3 )
-custom_colors/font_color_disabled = Color( 1, 0.960938, 0, 1 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Back"
-flat = false
-align = 1
-_sections_unfolded = [ "Visibility", "custom_colors", "custom_fonts" ]
-
-[connection signal="pressed" from="MainMenu/SlimeCageButton" to="." method="_on_SlimeCageButton_pressed"]
-
-[connection signal="pressed" from="MainMenu/OpportunitiesButton" to="." method="_on_OpportunitiesButton_pressed"]
-
-[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
 
 

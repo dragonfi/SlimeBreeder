@@ -8,8 +8,7 @@ var current_scene
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
-	$SlimeCage.hide()
-	change_to_main_menu()
+	pass
 
 func change_to_scene(scene):
 	current_scene = scene

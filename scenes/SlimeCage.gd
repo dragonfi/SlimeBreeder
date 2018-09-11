@@ -16,7 +16,7 @@ func _ready():
 	var spacing = vp.size / 4.0
 	var initial_offset = spacing / 2.0
 	for i in range(4):
-		for j in range(4):
+		for j in range(5):
 			var slime = Slime.instance()
 			add_child(slime)
 			slime.position = initial_offset + Vector2(spacing.x * i, spacing.y * j)
