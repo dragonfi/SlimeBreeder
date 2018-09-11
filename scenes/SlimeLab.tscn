@@ -12,8 +12,6 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Opportunities" parent="." index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 1020, 0 )
-
 [node name="SlimeCage" parent="." index="1" instance=ExtResource( 3 )]
 
 scale = Vector2( 0.7, 0.7 )
@@ -42,5 +40,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
+
+[connection signal="slime_sold" from="Opportunities" to="." method="_on_Opportunities_slime_sold"]
 
 

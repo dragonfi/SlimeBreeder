@@ -4,6 +4,7 @@ extends Node2D
 # var a = 2
 # var b = "textvar"
 var current_scene
+var money = 0
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -39,3 +40,8 @@ func _on_OpportunitiesButton_pressed():
 
 func _on_BackButton_pressed():
 	change_to_main_menu()
+
+
+func _on_Opportunities_slime_sold(sell_value):
+	money += sell_value
+	$UI/Money.text = "Money: %s" % money
