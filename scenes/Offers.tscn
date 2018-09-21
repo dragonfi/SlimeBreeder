@@ -1,11 +1,12 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scenes/Opportunities.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Offers.gd" type="Script" id=1]
 
-[node name="Opportunities" type="Node2D"]
+[node name="Offers" type="Node2D" index="0"]
 
 position = Vector2( 1020, 0 )
 script = ExtResource( 1 )
+_sections_unfolded = [ "Z Index" ]
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." index="0"]
 

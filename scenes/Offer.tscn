@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scenes/Opportunity.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Offer.gd" type="Script" id=1]
 [ext_resource path="res://fonts/Opportunity2.tres" type="DynamicFont" id=2]
 [ext_resource path="res://fonts/Opportunity.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scenes/OfferArea2D.gd" type="Script" id=4]
 
-[node name="Opportunity" type="Button"]
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 150, 50 )
+
+[node name="Offer" type="Button"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -79,5 +85,23 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="Area2D" type="Area2D" parent="." index="2"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+
+position = Vector2( 150, 50 )
+shape = SubResource( 1 )
+
+[connection signal="slime_dropped" from="Area2D" to="." method="_on_Area2D_slime_dropped"]
 
 

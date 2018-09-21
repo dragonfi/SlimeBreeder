@@ -1,16 +1,16 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/SlimeLab.gd" type="Script" id=1]
-[ext_resource path="res://scenes/Opportunities.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Offers.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/SlimeCage.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/SlimeLabFont.tres" type="DynamicFont" id=4]
 
-[node name="SlimeLab" type="Node2D" index="0"]
+[node name="SlimeLab" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Opportunities" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Offers" parent="." index="0" instance=ExtResource( 2 )]
 
 [node name="SlimeCage" parent="." index="1" instance=ExtResource( 3 )]
 
@@ -41,6 +41,6 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[connection signal="slime_sold" from="Opportunities" to="." method="_on_Opportunities_slime_sold"]
+[connection signal="slime_sold" from="Offers" to="." method="_on_Offers_slime_sold"]
 
 
