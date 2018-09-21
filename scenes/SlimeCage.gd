@@ -1,9 +1,5 @@
 extends Node2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 var SlimeDna = preload("res://scripts/slime_dna.gd")
 var Slime = preload("res://scenes/Slime.tscn")
 
@@ -12,7 +8,7 @@ var slimes = []
 var initial_offset
 var spacing
 
-const cols= 4
+const cols = 4
 const rows = 5
 
 func _ready():
@@ -33,7 +29,7 @@ func create_slimes(initial_position):
 			slime.move_to(position_from_index(i * cols + j))
 			slime.connect("breed", self, "breed")
 			slimes.append(slime)
-	
+
 func position_from_index(index):
 	var col = index % cols
 	var row = index / cols

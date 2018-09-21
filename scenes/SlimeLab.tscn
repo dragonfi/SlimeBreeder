@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/SlimeCage.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/SlimeLabFont.tres" type="DynamicFont" id=4]
 
-[node name="SlimeLab" type="Node2D"]
+[node name="SlimeLab" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]

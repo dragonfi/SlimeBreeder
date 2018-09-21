@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/Offers.gd" type="Script" id=1]
 
-[node name="Offers" type="Node2D" index="0"]
+[node name="Offers" type="Node2D"]
 
 position = Vector2( 1020, 0 )
 script = ExtResource( 1 )
