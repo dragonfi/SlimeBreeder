@@ -31,7 +31,7 @@ func add_offer(description, value, evaluator):
 	o.connect("slime_sold", self, "_on_slime_sold", [o])
 
 func _on_slime_sold(slime, offer):
-	emit_signal("slime_sold", slime, offer.value)
+	emit_signal("slime_sold", slime, offer.value, offer)
 
 #func _process(delta):
 #	pass

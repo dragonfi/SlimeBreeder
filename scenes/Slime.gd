@@ -1,13 +1,14 @@
 extends Node2D
 
-var SlimeDna = preload("res://scripts/slime_dna.gd")
+var SlimeDna = preload("res://scripts/SlimeDna.gd")
 
 signal pressed
 signal breed
+signal remove_slime
 
 export var idle_speed = 1.0
 export var color = Color(1, 1, 1, 1)
-export var size = 1.0
+export var size = 1.0 setget _set_size
 var modulate_scale = Vector2(0.25, 0.25)
 var speed = 100.0
 
@@ -50,7 +51,11 @@ func set_dna(slime_dna):
 	shine.self_modulate = (color + Color(1, 1, 1, 1)) / 2
 	sprite.self_modulate = color
 	
-	scale = Vector2(modulate_scale.x * size,  modulate_scale.y * size)
+	#set_size(size)
+
+func _set_size(value):
+	size = value
+	scale = Vector2(modulate_scale.x * size, modulate_scale.y * size)
 
 func move_to(position):
 	target_position = position
@@ -61,7 +66,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
-		select()
+		if GlobalState.is_remove_mode_active:
+			emit_signal("remove_slime", self)
+		else:
+			select()
 
 func _input(event):
 	if not selected:
@@ -69,9 +77,12 @@ func _input(event):
 
 	if event is InputEventMouseButton and not event.pressed:
 		deselect()
-		for area in $Sprite/Area2D.get_overlapping_areas():
+		for area in $Sprite/DropArea.get_overlapping_areas():
+			if area == $Sprite/Area2D:
+				continue
 			if area.has_method("slime_dropped"):
 				area.slime_dropped(self)
+				break
 
 	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_LEFT):
 		global_position += event.relative
@@ -101,5 +112,13 @@ func deselect():
 	z_index -= 10
 	highlight(1.0)
 
+func remove_slime():
+	$AnimationPlayer2.connect("animation_finished", self, "_free")
+	$AnimationPlayer2.queue("FadeOut")
+
 func _on_Area2D_slime_dropped(other):
 	emit_signal("breed", self, other)
+
+func _free(animation_name):
+	if animation_name == "FadeOut":
+		self.queue_free()

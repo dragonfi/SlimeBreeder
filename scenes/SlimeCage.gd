@@ -1,7 +1,9 @@
 extends Node2D
 
-var SlimeDna = preload("res://scripts/slime_dna.gd")
+var SlimeDna = preload("res://scripts/SlimeDna.gd")
 var Slime = preload("res://scenes/Slime.tscn")
+
+signal breeding
 
 var slimes = []
 
@@ -10,6 +12,8 @@ var spacing
 
 const cols = 4
 const rows = 5
+
+const SLIME_PLACEHOLDER = "slime_placeholder"
 
 func _ready():
 	randomize()
@@ -21,14 +25,18 @@ func _ready():
 	create_slimes(vp.size / 2.0)
 
 func create_slimes(initial_position):
-	for i in range(rows):
-		for j in range(cols):
-			var slime = Slime.instance()
-			add_child(slime)
-			slime.position = initial_position
-			slime.move_to(position_from_index(i * cols + j))
-			slime.connect("breed", self, "breed")
-			slimes.append(slime)
+	for i in range(rows * cols):
+		slimes.append(create_slime(initial_position, i))
+
+
+func create_slime(initial_position, index):
+	var slime = Slime.instance()
+	add_child(slime)
+	slime.position = initial_position
+	slime.move_to(position_from_index(index))
+	slime.connect("breed", self, "breed")
+	slime.connect("remove_slime", self, "remove_slime")
+	return slime
 
 func position_from_index(index):
 	var col = index % cols
@@ -38,16 +46,20 @@ func position_from_index(index):
 
 func breed(slime1, slime2):
 	print("breeding")
-	for slime in slimes:
-		slime.queue_free()
-	slimes = []
+	var new_slime_count = 0
+	for i in range(len(slimes)):
+		var item = slimes[i]
+		match item:
+			SLIME_PLACEHOLDER:
+				var slime = create_slime(slime1.position, i)
+				slimes[i] = slime
+				slime.set_dna(slime1.dna.combine(slime2.dna))
+				slime.deselect()
+				new_slime_count += 1
 	
-	create_slimes(slime1.position)
-	
-	for slime in slimes:
-		slime.set_dna(slime1.dna.combine(slime2.dna))
-		slime.deselect()
+	if new_slime_count > 0:
+		emit_signal("breeding")
 
 func remove_slime(slime):
-	slimes.erase(slime)
-	slime.queue_free()
+	slimes[slimes.find(slime)] = SLIME_PLACEHOLDER
+	slime.remove_slime()

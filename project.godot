@@ -14,6 +14,10 @@ config/name="Slime Breeder"
 run/main_scene="res://scenes/SlimeLab.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GlobalState="*res://scripts/GlobalState.gd"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
