@@ -131,7 +131,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 333.0
-margin_right = 451.0
+margin_right = 353.0
 margin_bottom = 96.0
 rect_min_size = Vector2( 20, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
@@ -149,8 +149,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 455.0
-margin_right = 614.0
+margin_left = 357.0
+margin_right = 516.0
 margin_bottom = 96.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -167,7 +167,7 @@ group = null
 text = "Remove"
 flat = false
 align = 1
-_sections_unfolded = [ "custom_fonts" ]
+_sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [node name="Label" type="Label" parent="UI/HBoxContainer/RemoveButton" index="0"]
 

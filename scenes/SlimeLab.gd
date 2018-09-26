@@ -13,6 +13,7 @@ func _on_Offers_slime_sold(slime, sell_value, offer):
 	$SlimeCage.remove_slime(slime)
 	money += sell_value
 	$UI/HBoxContainer/Money.text = "Money: %s" % money
+	$Offers.refill_offers(6)
 
 
 func _on_SlimeCage_breeding():
