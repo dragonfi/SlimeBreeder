@@ -2,7 +2,6 @@ extends Node2D
 
 var Offer = preload("res://scenes/Offer.tscn")
 var OfferData = preload("res://scripts/OfferData.gd").new()
-var F = preload("res://Functional.gd")
 
 signal slime_sold
 var list
